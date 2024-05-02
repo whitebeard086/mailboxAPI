@@ -7,6 +7,13 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 
+/**
+ * @OA\Tag(
+ *     name="Authentication",
+ *     description="Operations about authentication",
+ * )
+ */
+
 class AuthController extends Controller
 {
     /**
@@ -15,7 +22,7 @@ class AuthController extends Controller
      * summary="Login",
      * description="Login",
      * operationId="authLogin",
-     * tags={"Auth"},
+     * tags={"Authentication"},
      * @OA\RequestBody(
      *    required=true,
      *    description="Pass user credentials",
