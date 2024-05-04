@@ -67,6 +67,33 @@
                 }
             }
         },
+        "/api/user": {
+            "get": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Get authenticated user",
+                "description": "Get the currently logged in user",
+                "operationId": "authUser",
+                "responses": {
+                    "200": {
+                        "description": "Get authenticated user",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/components/schemas/UserResource"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/logout": {
             "post": {
                 "tags": [
@@ -115,64 +142,6 @@
                                             "items": {
                                                 "$ref": "#/components/schemas/MessageResource"
                                             }
-                                        },
-                                        "links": {
-                                            "properties": {
-                                                "first": {
-                                                    "type": "string",
-                                                    "example": "http://127.0.0.1:8000/api/messages?page=1"
-                                                },
-                                                "last": {
-                                                    "type": "string",
-                                                    "example": "http://127.0.0.1:8000/api/messages?page=2"
-                                                },
-                                                "prev": {
-                                                    "type": "string",
-                                                    "example": "http://127.0.0.1:8000/api/messages?page=1"
-                                                },
-                                                "next": {
-                                                    "type": "string",
-                                                    "example": "http://127.0.0.1:8000/api/messages?page=3"
-                                                }
-                                            },
-                                            "type": "object"
-                                        },
-                                        "meta": {
-                                            "properties": {
-                                                "current_page": {
-                                                    "type": "integer",
-                                                    "example": 1
-                                                },
-                                                "from": {
-                                                    "type": "integer",
-                                                    "example": 1
-                                                },
-                                                "last_page": {
-                                                    "type": "integer",
-                                                    "example": 2
-                                                },
-                                                "path": {
-                                                    "type": "string",
-                                                    "example": "http://127.0.0.1:8000/api/messages"
-                                                },
-                                                "per_page": {
-                                                    "type": "integer",
-                                                    "example": 2
-                                                },
-                                                "to": {
-                                                    "type": "integer",
-                                                    "example": 2
-                                                },
-                                                "total": {
-                                                    "type": "integer",
-                                                    "example": 4
-                                                }
-                                            },
-                                            "type": "object"
-                                        },
-                                        "unreadMessagesCount": {
-                                            "type": "integer",
-                                            "example": 10
                                         }
                                     },
                                     "type": "object"
@@ -291,6 +260,12 @@
                     },
                     "email": {
                         "type": "string"
+                    },
+                    "messagesCount": {
+                        "type": "integer"
+                    },
+                    "unreadMessagesCount": {
+                        "type": "integer"
                     }
                 },
                 "type": "object"

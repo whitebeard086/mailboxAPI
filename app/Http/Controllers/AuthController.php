@@ -69,6 +69,29 @@ class AuthController extends Controller
     }
 
     /**
+     * @OA\Get(
+     * path="/api/user",
+     * summary="Get authenticated user",
+     * description="Get the currently logged in user",
+     * operationId="authUser",
+     * tags={"Authentication"},
+     * @OA\Response(
+     *    response=200,
+     *    description="Get user success",
+     *    @OA\JsonContent(
+     *       @OA\Property(property="data", ref="#/components/schemas/UserResource")
+     *    )
+     * )
+     * )
+     */
+    public function getAuthenticatedUser()
+    {
+        return response()->json([
+            'user' => new UserResource(Auth::user())
+        ]);
+    }
+
+    /**
      * @OA\Post(
      * path="/api/logout",
      * summary="Logout",

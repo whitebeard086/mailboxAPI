@@ -24,6 +24,7 @@ Route::middleware('throttle:1000,1')->group(function () {
 // Protected Routes
 Route::middleware(['auth:sanctum', 'throttle:60,1'])->group(function () {
     Route::post('logout', [AuthController::class, 'logout']);
+    Route::get('user', [AuthController::class, 'getAuthenticatedUser']);
 
     // Message Routes
     Route::get('messages', [MessageController::class, 'index']);
