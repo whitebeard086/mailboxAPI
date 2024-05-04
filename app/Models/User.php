@@ -46,4 +46,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Message::class, 'receiver_id');
     }
+
+    public function unreadMessages()
+    {
+        return $this->messages()->where('is_read', false)->count();
+    }
 }

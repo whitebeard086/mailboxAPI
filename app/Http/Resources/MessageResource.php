@@ -17,8 +17,8 @@ use Illuminate\Http\Resources\Json\JsonResource;
  *         @OA\Property(property="preview", type="string"),
  *         @OA\Property(property="isRead", type="boolean"),
  *         @OA\Property(property="sender", type="object", ref="#/components/schemas/UserResource"),
- *         @OA\Property(property="created_at", type="string", format="date-time"),
- *         @OA\Property(property="updated_at", type="string", format="date-time"),
+ *         @OA\Property(property="createdAt", type="string", format="date-time"),
+ *         @OA\Property(property="updatedAt", type="string", format="date-time"),
  *     )
  */
 
@@ -35,11 +35,11 @@ class MessageResource extends JsonResource
             'id' => $this->id,
             'subject' => $this->subject,
             'content' => $this->content,
-            'preview' => Str::limit($this->content, 20),
-            'isRead' => $this->is_read,
+            'preview' => Str::limit($this->content, 40),
+            'isRead' => $this->is_read ? true : false,
             'sender' => new UserResource($this->sender),
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at
+            'createdAt' => $this->created_at,
+            'updatedAt' => $this->updated_at
         ];
     }
 }

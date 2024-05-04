@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Message;
+use App\Traits\MessageTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\MessageResource;
@@ -16,6 +17,8 @@ use App\Http\Resources\MessageResource;
 
 class MessageController extends Controller
 {
+    use MessageTrait;
+
     /**
      * @OA\Get(
      *     path="/api/messages",
@@ -43,7 +46,7 @@ class MessageController extends Controller
     
     public function index()
     {
-        $messages = MessageResource::collection(Message::with('sender')->where('receiver_id', Auth::id())->paginate(2));
+        $messages = MessageResource::collection(Message::with('sender')->where('receiver_id', Auth::id())->orderBy('created_at', 'desc')->paginate(20));
 
         return $messages;
     }
@@ -84,6 +87,8 @@ class MessageController extends Controller
      */
     public function show(Message $message)
     {
-        return new MessageResource($message->load('sender'));
+        $this->markMessageAsRead($message);
+        
+        return new MessageResource($message);
     }
 }

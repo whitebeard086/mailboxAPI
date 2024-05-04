@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Http\Resources\UserResource;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 
@@ -37,6 +39,7 @@ class AuthController extends Controller
      *    description="Logged in successfully",
      *    @OA\JsonContent(
      *       @OA\Property(property="token", type="string", example="1|4BkCbzvtrpO6kU3Qk..."),
+     *       @OA\Property(property="user", ref="#/components/schemas/UserResource"),
      *    )
      * )
      * )
@@ -61,6 +64,33 @@ class AuthController extends Controller
 
         return response()->json([
             'token' => $token, 
+            'user' => new UserResource($user)
         ]);
+    }
+
+    /**
+     * @OA\Post(
+     * path="/api/logout",
+     * summary="Logout",
+     * description="Logout",
+     * operationId="authLogout",
+     * tags={"Authentication"},
+     * @OA\Response(
+     *    response=200,
+     *    description="Logged out successfully",
+     *    @OA\JsonContent(
+     *       @OA\Property(property="message", type="string", example="Logged out")
+     *    )
+     * )
+     * )
+     */
+    public function logout()
+    {
+        $user = Auth::user();
+        $user->tokens()->delete();
+
+        return [
+            'message' => 'Logged out'
+        ];
     }
 }

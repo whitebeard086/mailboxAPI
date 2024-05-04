@@ -13,6 +13,8 @@ use Illuminate\Http\Resources\Json\JsonResource;
  *      @OA\Property(property="id", type="integer"),
  *      @OA\Property(property="name", type="string"),
  *      @OA\Property(property="email", type="string"),
+ *      @OA\Property(property="messagesCount", type="integer"),
+ *      @OA\Property(property="unreadMessagesCount", type="integer"),
  * )
  */
 
@@ -29,6 +31,8 @@ class UserResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'email' => $this->email,
+            'messagesCount' => $this->messages()->count(),
+            'unreadMessagesCount' => $this->unreadMessages(),
         ];
     }
 }
